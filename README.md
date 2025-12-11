@@ -107,93 +107,49 @@ Essa hierarquia permite drill-down no Power BI e visão analítica estruturada.
 ```bash
 python etapa3_pipeline.py
 
----
+## ETAPA 4 — Modelo de IA (Agrupamento de Clientes)
 
-## ETAPA 4 — Modelo de IA (Clusterização de Clientes)
+Objetivo: aplicar um modelo simples de Machine Learning para identificar perfis de clientes com base no comportamento de compra registrado na base gold_vendas.csv. Esta etapa complementa as análises anteriores permitindo uma visão segmentada da base de consumidores.
 
-**Objetivo:** aplicar técnicas de aprendizado não supervisionado para identificar perfis distintos de clientes com base no comportamento de compra registrado na base `gold_vendas.csv`.
+### Entregas
 
-A etapa complementa o ciclo analítico iniciado nas fases anteriores, permitindo extrair inteligência aplicada para segmentação, marketing e decisões de negócio.
-
----
+| Arquivo | Descrição |
+|--------|-----------|
+| **etapa4_modelo_ia.py** | Script responsável por ler a base, calcular métricas por cliente, normalizar variáveis e aplicar o K-Means |
+| **clientes_clusterizados.csv** | Dataset final contendo métricas agregadas e o cluster atribuído por cliente |
 
 ### Abordagem Adotada
 
-Foi utilizado o algoritmo **K-Means**, pela combinação de:
+Foi utilizada uma técnica de aprendizado não supervisionado (K-Means), adequada quando não existe variável-alvo e deseja-se identificar grupos com comportamentos semelhantes.
 
-- simplicidade e eficiência;
-- boa performance com poucas features numéricas;
-- fácil interpretabilidade dos resultados;
-- ausência de necessidade de variável-alvo (aprendizado não supervisionado).
+Os passos principais incluem:
 
-A preparação dos dados incluiu:
+- Agregação de todas as compras por CustomerID  
+- Cálculo de métricas que representam comportamento de compra  
+- Normalização das variáveis numéricas  
+- Aplicação do algoritmo K-Means com 3 clusters  
+- Interpretação dos grupos do ponto de vista de negócio  
 
-- agregação das vendas por `CustomerID`;  
-- cálculo de métricas comportamentais;  
-- normalização com **StandardScaler** para evitar distorção de variáveis em escalas diferentes;  
-- definição de **3 clusters** como ponto de equilíbrio entre explicabilidade e separação dos grupos.
+### Features Utilizadas por Cliente
 
----
+Cada cliente foi representado por um conjunto de métricas derivadas de suas compras:
 
-### Arquivo Principal
+- **total_compras** — quantidade de faturas distintas  
+- **total_gasto** — soma da coluna Receita  
+- **ticket_medio** — gasto médio por compra  
+- **primeira_compra** — data da primeira compra  
+- **ultima_compra** — data da última compra  
+- **dias_entre_compras** — frequência média estimada via:  
+  \[
+  dias\_entre\_compras = \frac{ultima\_compra - primeira\_compra}{total\_compras}
+  \]
 
-| Arquivo | Função |
-|---------|--------|
-| **etapa4_modelo_ia.py** | Executa toda a lógica de agregação, normalização, clusterização e exportação dos resultados |
-
----
-
-### Funcionalidades Implementadas
-
-O script realiza as seguintes operações:
-
-1. **Leitura da base `gold_vendas.csv`**
-   - A base consolidada (gold layer) contém registros transacionais já tratados.
-
-2. **Agregação por cliente**
-   - Métricas calculadas:
-     - `total_compras` — número de faturas distintas  
-     - `total_gasto` — valor total consumido  
-     - `ticket_medio` — gasto médio por transação  
-     - `primeira_compra` — data mínima  
-     - `ultima_compra` — data máxima  
-     - `dias_entre_compras` — frequência estimada  
-
-3. **Normalização das variáveis numéricas**
-   - Evita que métricas com magnitude maior dominem o algoritmo.
-
-4. **Treinamento do K-Means**
-   - Número de clusters definido como **3**.
-   - Atribuição do cluster a cada cliente.
-
-5. **Exportação do arquivo enriquecido**
-   - Gera `clientes_clusterizados.csv` contendo:
-     - CustomerID  
-     - Métricas agregadas  
-     - Cluster atribuído  
-
----
-
-### Fórmulas e Detalhes Técnicos
-
-**Frequência média de recompra:**
-
-\[
-dias\_entre\_compras = \frac{ultima\_compra - primeira\_compra}{total\_compras}
-\]
-
-**Variáveis normalizadas com StandardScaler:**
-
-- `total_compras`  
-- `total_gasto`  
-- `ticket_medio`  
-- `dias_entre_compras`
-
----
+As variáveis numéricas foram normalizadas com **StandardScaler** antes do treinamento do modelo.
 
 ### Execução
 
-Para rodar o modelo:
+No terminal:
 
 ```bash
 python etapa4_modelo_ia.py
+
