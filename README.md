@@ -107,6 +107,9 @@ Essa hierarquia permite drill-down no Power BI e visão analítica estruturada.
 ```bash
 python etapa3_pipeline.py
 
+---
+
+```md
 ## ETAPA 4 — Modelo de IA (Agrupamento de Clientes)
 
 Objetivo: aplicar um modelo simples de Machine Learning para identificar perfis de clientes com base no comportamento de compra registrado na base gold_vendas.csv.
