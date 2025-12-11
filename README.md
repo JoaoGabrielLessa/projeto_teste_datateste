@@ -103,7 +103,7 @@ Arquivo principal: etapa3_pipeline.py
 
 ```bash
 python etapa3_pipeline.py
-
+```
 ```markdown
 ## ETAPA 4 — Modelo de IA (Agrupamento de Clientes)
 
