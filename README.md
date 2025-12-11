@@ -104,7 +104,7 @@ Arquivo principal: etapa3_pipeline.py
 ```bash
 python etapa3_pipeline.py
 ```
-```markdown
+
 ## ETAPA 4 — Modelo de IA (Agrupamento de Clientes)
 
 Objetivo: aplicar Machine Learning não supervisionado para identificar perfis de clientes com base no comportamento de compra registrado na base `gold_vendas.csv`.
