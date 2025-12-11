@@ -1,0 +1,56 @@
+# ETAPA 1 — Exploração e Diagnóstico de Dados
+
+**Base analisada:** Online Retail.xlsx
+**Total de registros:** 541.909
+**Total de colunas:** 8
+
+O objetivo desta etapa foi avaliar a qualidade da base fornecida antes da construção das análises,
+identificando problemas estruturais que possam afetar cálculos de receita, retenção ou modelagem.
+
+---
+
+## Relatório de Qualidade de Dados
+
+| Métrica                                   | Valor |
+|-------------------------------------------|------:|
+| Linhas duplicadas                         | 5.268 |
+| Valores nulos (total)                     | 136.534 |
+| Datas inválidas (InvoiceDate)             | 0 |
+| Quantidade negativa (Quantity)            | 10.624 |
+| Preço zero ou negativo (UnitPrice)        | 2.517 |
+| Registros sem ID de cliente (CustomerID)  | 135.080 |
+
+### Detalhamento de nulos por coluna
+
+| Coluna       | Nulos |
+|--------------|------:|
+| Description  | 1.454 |
+| CustomerID   | 135.080 |
+| Demais colunas | 0 |
+
+---
+
+## Impacto dos Problemas Identificados
+
+- Aproximadamente **25% dos registros apresentam inconsistências**.
+- **10.624 transações** com quantidade negativa indicam **devoluções ou erros de registro**.
+- **2.517 transações** com preço igual ou menor que zero distorcem **qualquer cálculo de faturamento**.
+- **135 mil registros sem ID** comprometem qualquer análise de **comportamento, retenção ou churn**.
+
+---
+
+## Decisões de Tratamento Aplicadas
+
+| Problema | Ação |
+|----------|------|
+| Linhas duplicadas | Removidas |
+| Quantidade <= 0 | Removidas para análises de vendas |
+| Preço <= 0 | Removidas para cálculo de receita |
+| InvoiceDate inválida | Removidas |
+| CustomerID nulo | Tratados como "cliente desconhecido" somente em receita |
+
+As decisões acima garantem maior confiabilidade sem desconsiderar dados relevantes de faturamento.
+
+---
+
+**Status:** Base tratada e pronta para a Etapa 2 (análises e dashboard).
