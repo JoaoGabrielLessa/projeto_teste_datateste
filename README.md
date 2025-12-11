@@ -104,3 +104,48 @@ Arquivo principal: etapa3_pipeline.py
 ```bash
 python etapa3_pipeline.py
 
+```markdown
+## ETAPA 4 — Modelo de IA (Agrupamento de Clientes)
+
+Objetivo: aplicar Machine Learning não supervisionado para identificar perfis de clientes com base no comportamento de compra registrado na base `gold_vendas.csv`.
+
+### Entregas
+
+| Arquivo | Descrição |
+|---------|-----------|
+| etapa4_modelo_ia.py | Script que lê a base, agrega métricas por cliente, normaliza variáveis e aplica K-Means |
+| clientes_clusterizados.csv | Dataset final contendo métricas agregadas e o cluster atribuído a cada cliente |
+
+### Abordagem Adotada
+
+Foi utilizada uma técnica de aprendizado não supervisionado (K-Means), adequada quando não há variável-alvo definida e deseja-se identificar grupos com padrões semelhantes.
+
+Os principais passos incluem:
+
+- Agregação das compras por CustomerID  
+- Cálculo das métricas de comportamento  
+- Normalização das variáveis numéricas  
+- Treinamento do modelo K-Means com 3 clusters  
+- Interpretação dos grupos sob a ótica de negócio  
+
+### Features Utilizadas por Cliente
+
+As métricas derivadas da base incluem:
+
+- total_compras — quantidade de faturas distintas  
+- total_gasto — soma total da coluna Receita  
+- ticket_medio — média de gasto por compra  
+- primeira_compra — data da primeira compra  
+- ultima_compra — data da última compra  
+- dias_entre_compras — estimado por:  
+
+\[
+dias\_entre\_compras = \frac{ultima\_compra - primeira\_compra}{total\_compras}
+\]
+
+As variáveis numéricas foram padronizadas com StandardScaler.
+
+### Execução
+
+```bash
+python etapa4_modelo_ia.py
